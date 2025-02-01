@@ -5,7 +5,7 @@ const userService = require('../services/user.service');
 const {validationResult} = require('express-validator');
 
 const blackListTokenModel = require('../models/blacklistToken.model');
-const blacklistTokenModel = require('../models/blacklistToken.model');
+
 
 //logic for registring user 
 
@@ -21,6 +21,12 @@ module.exports.registerUser = async (req,res,next)=>{
       } 
 
       const {fullname,email,password} = req.body;
+
+      const isUserAlreadyExists = userModel.findOne({email});
+
+      if(isUserAlreadyExists){
+          return res.status(400).json({message:"User Already Exists"});
+      }
 
       // ..pehle jo method use kari this bo use kar rhe hei
       const hashedPassword = await userModel.hashPassword(password);
@@ -99,6 +105,6 @@ module.exports.logoutUser = async (req,res,next)=>{
      res.clearCookie('token');
      const token =  req?.cookies?.token || req?.headers?.authorization.split(' ')[1];
 
-     await blacklistTokenModel.create({token});
+     await blackListTokenModel.create({token});
      res.status(200).json({message: 'Logged Out'});
 }

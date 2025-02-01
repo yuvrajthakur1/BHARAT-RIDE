@@ -2,6 +2,7 @@ const userModel = require('../models/user_model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const blacklistTokenModel = require('../models/blacklistToken.model');
 
 
 //Yaha Authorisation karege user login ka 
@@ -14,7 +15,7 @@ module.exports.authUser = async (req,res,next)=>{
         return res.status(401).json({message:'unauthorized'});
       }
 
-      const isBlackListed = await  userModel.findOne({token:token});
+      const isBlackListed = await  blacklistTokenModel.findOne({token:token});
 
       if(isBlackListed){
         res.status(401).json({message:'not authorized'});

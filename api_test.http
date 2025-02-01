@@ -1,4 +1,26 @@
 
+
+POST http://localhost:4000/captain/register
+Content-Type: application/json
+
+{
+  "fullname":{
+    "firstname":"Hari Roy",
+    "lastname": "Thakur"
+  }
+  ,
+  "email":"yuvrajthakur65@gmail.com",
+  "password":"Hariom@123",
+  "vehicle":{
+    "color":"red",
+    "plate":"MP 04 XY 6204",
+    "capacity":3,
+    "vehicleType":"car"
+  }
+}
+
+
+
 # POST http://localhost:4000/users/register
 # Content-Type: application/json
 

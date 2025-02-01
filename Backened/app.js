@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 const connectToDb = require('./db/db');
 const userRoutes = require('./routes/user.routes');
+const captainRoutes = require('./routes/captain.routes');
 
 //it is a middleware
 const cookieParser = require('cookie-parser');
@@ -19,14 +20,17 @@ app.get('/',(req,res)=>{
   res.send("Hello World");
 })
 
-app.get('/new',(req,res)=>{
-  res.send("<h1>Hello New</h1>");
-})
 
 
 
+//List Of Routes For Your Website
 
+//Use Of USer ROuter Form Every EveryWhere
 app.use('/users',userRoutes);
 
+
+//Use Of captain routes
+
+app.use('/captain',captainRoutes)
 
 module.exports = app;

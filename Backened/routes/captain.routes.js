@@ -5,10 +5,12 @@ const express = require('express');
 const router = express.Router();
 const captainController = require('../controllers/captain.controller');
 
+const authMiddleware = require('../middlewares/auth.middleware');
 //Express Validator For Applying validation to coming data from routes
 
 const {body} = require('express-validator');
 
+//Register Router 
 router.post('/register',[
   //Array Of Validation
   body('email').isEmail().withMessage('invalid email'),
@@ -21,8 +23,24 @@ router.post('/register',[
 ],captainController.registerCaptain)
 
 
+//Login Router
+
+router.post('/login',[
+  //Validation
+  body('email').isEmail().withMessage('invalid email'),
+  body('password').isLength({min:6}).withMessage('password  is short')
+],captainController.loginCaptain);
 
 
+//Profile ROuter
+
+router.get('/profile', authMiddleware.authCaptain  ,captainController.getCaptainProfile);
+
+
+//logout route
+
+
+router.post('/logout',authMiddleware.authCaptain,captainController.logoutCaptain);
 
 
 

@@ -41,7 +41,7 @@ router.get(
 
 //Creating a logout router 
 
-router.post('/logout',authMiddleware.authUser,userController.logoutUser)
+router.get('/logout',authMiddleware.authUser,userController.logoutUser)
 
 
 module.exports = router;

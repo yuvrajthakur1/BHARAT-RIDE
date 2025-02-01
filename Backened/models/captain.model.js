@@ -23,13 +23,14 @@ const captainSchema = new mongoose.Schema({
   type: String,
   required: true,
   unique: true,
-  lowercase:true
+  lowercase:true,
+  minlength:[5,'Email is Very Short']
 },
 
 password:{
   type:String,
   required:true,
-  unique:true
+  select:false
 },
 
 socketId:{

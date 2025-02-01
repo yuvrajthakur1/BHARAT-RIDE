@@ -1,23 +1,49 @@
 
 
-POST http://localhost:4000/captain/register
-Content-Type: application/json
+# GET http://localhost:4000/captain/profile HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzllMGFiNDQ4ZDkyNDU2MzljNGJjMjAiLCJpYXQiOjE3Mzg0MTA5ODYsImV4cCI6MTczODQ5NzM4Nn0.XpHcfzIqmtCzf6cD9mUIs_b3nIpUlrt7WEbu_D0BgpI
+# Content-Type: application/json
 
-{
-  "fullname":{
-    "firstname":"Hari Roy",
-    "lastname": "Thakur"
-  }
-  ,
-  "email":"yuvrajthakur65@gmail.com",
-  "password":"Hariom@123",
-  "vehicle":{
-    "color":"red",
-    "plate":"MP 04 XY 6204",
-    "capacity":3,
-    "vehicleType":"car"
-  }
-}
+
+
+
+# POST http://localhost:4000/captain/logout
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzllMGFiNDQ4ZDkyNDU2MzljNGJjMjAiLCJpYXQiOjE3Mzg0MTA5ODYsImV4cCI6MTczODQ5NzM4Nn0.XpHcfzIqmtCzf6cD9mUIs_b3nIpUlrt7WEbu_D0BgpI
+# Content-Type: application/json
+
+# {
+#   "message": "Logout request"
+# }
+
+
+# Login API Request
+# POST http://localhost:4000/captain/login
+# Content-Type: application/json
+
+# {
+#   "email": "yuvrajthakur5@gmail.com",
+#   "password": "Harim@123"
+# }
+
+
+# POST http://localhost:4000/captain/register
+# Content-Type: application/json
+
+# {
+#   "fullname":{
+#     "firstname":"Hari Roy",
+#     "lastname": "Thakur"
+#   }
+#   ,
+#   "email":"yuvrajthakur5@gmail.com",
+#   "password":"Harim@123",
+#   "vehicle":{
+#     "color":"red",
+#     "plate":"MP 04 XY 6204",
+#     "capacity":3,
+#     "vehicleType":"car"
+#   }
+# }
 
 
 

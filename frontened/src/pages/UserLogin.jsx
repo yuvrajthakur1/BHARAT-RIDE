@@ -1,5 +1,9 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserDataContext } from "../context/UserContext";
 
 
 const UserLogin = () => {
@@ -7,17 +11,28 @@ const UserLogin = () => {
 
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
-  const [userData,setUserData] = useState({
-     
-  });
+  // const [userData,setUserData] = useState({});
 
 
-  const submitHandler = (e) => {
+  const {user,setUser} = useContext(UserDataContext);
+
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setUserData({
+    const userData = {
       email:email,
       password:password
-    })
+    }
+    
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`,userData); 
+
+    if(response.status === 200){
+      const data = response.data;
+      setUser(data.user);
+      localStorage.setItem('token',data.token);
+      navigate('/home');
+    }
     setEmail('');
     setPassword('');
   }
@@ -56,18 +71,18 @@ const UserLogin = () => {
   />
 
 
- <button className="pr-4 pt-1 pb-1 pl-4 w-full hover:scale-101 hover:bg-gray-900 bg-[#111] text-white rounded shadow-lg">Login</button>
+ <button className="pr-4 pt-1 pb-1 text-base pl-4 w-full hover:scale-101 hover:bg-gray-900 bg-[#111] text-white rounded shadow-lg">Login</button>
 
 </form>
 
 
-<p className="text-center pt-1 pb-1">New Here ? <Link to='/signup' className="text-blue-600">Register As A User </Link></p>
+<p className="text-center text-sm pt-1 pb-1">New Here ? <Link to='/signup' className="text-blue-600">Register As A User </Link></p>
 
 
     </div>
      {/* IF User Do Not Have Account  */}
       <div>
-        <Link to='/captain-login' className=" flex justify-center items-center pr-4 pt-1 pb-1 pl-4 w-full hover:scale-101  bg-[#10b461] text-white rounded shadow-lg mt-4">Sign In As Captain</Link>
+        <Link to='/captain-login' className=" flex justify-center items-center pr-4 pt-1 pb-1 pl-4 w-full hover:scale-101  bg-[#10b461] text-white rounded shadow-lg text-base mt-4">Sign In As Captain</Link>
       </div>
 
 

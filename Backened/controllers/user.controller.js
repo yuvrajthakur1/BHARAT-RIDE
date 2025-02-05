@@ -86,6 +86,7 @@ module.exports.loginUser = async (req,res,next)=>{
 
 
 //Controller for /profile route
+
 //Jis user ne login ne use kia hei sirf usi ko bo page of profile dikeh
 
 //Uske Liye Humei ek Middleware lagana padta hei

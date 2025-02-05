@@ -1,71 +1,61 @@
-// import React from 'react'
-
-// import { useContext } from "react"
-// import { UserDataContext } from "../context/UserContext"
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import  {UserDataContext} from '../context/UserContext';
+import { UserDataContext } from '../context/UserContext';
 import axios from 'axios';
-
-
 
 // eslint-disable-next-line react/prop-types
 const UserProtectWrapper = ({children}) => {
-
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const {user, setUser} = useContext(UserDataContext);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //Agar Token Exists Nahi Karta to login pe jao
- 
-  useEffect(() => {  
-     
-      let isMounted = true;
+  const clearAuthAndRedirect = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    navigate('/login');
+  };
 
-      if(!token){
-        navigate('/login');
-        return;
-      }
-    
+  useEffect(() => {
+    if(!token){
+      clearAuthAndRedirect();
+      return;
+    }
 
-      const fetchProfile = async () => {
-        try {
-          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          
-          if (isMounted && response.status === 200) {
-            if (response.data.captain) {
-              setUser(response.data.user);
-              setIsLoading(false);
-            } else {
-              localStorage.removeItem('token');
-              navigate('/login');
-            }
+    let isMounted = true;
+
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        } catch (error) {
-          if (isMounted) {
-            console.error(error);
-            console.log("aho dada catch pakad lele wade");
-            setError(error.message);
-            localStorage.removeItem('token');
-            navigate('/login');
+        });
+        
+        if (isMounted) {
+          if (response.status === 200) {
+            setUser(response.data);
+            setIsLoading(false);
+          } else {
+            clearAuthAndRedirect();
           }
         }
-      };
+      } catch (error) {
+        if (isMounted) {
+          console.error(error);
+          setError(error.message);
+          clearAuthAndRedirect();
+        }
+      }
+    };
 
-      fetchProfile();
+    fetchProfile();
 
-      return () => {
-        isMounted = false;
-      };
-    
-
-   }, [navigate, token,setUser])
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate, token, setUser]);
 
    if(isLoading){
     return <div>Loading...</div>
@@ -76,18 +66,18 @@ const UserProtectWrapper = ({children}) => {
  }
 
  if(!user){
-    return <div>No captain data found</div>
+    navigate('/login');
+    return null;
  }
 
   return (
-   <>
-    {children}
-   </>
+    <>
+      {children}
+    </>
   )
 }
 
 export default UserProtectWrapper
-
 
 
 

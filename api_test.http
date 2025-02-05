@@ -52,12 +52,12 @@
 
 # {
 #   "fullname":{
-#     "firstname":"Hari Om",
+#     "firstname":"Hari Om2",
 #     "lastname": "Sanakar"
 #   }
 #   ,
-#   "email":"hariom@gmail.com",
-#   "password":"Hariom@123"
+#   "email":"hariom2@gmail.com",
+#   "password":"Hariom2@123"
 # }
 
 
@@ -65,8 +65,8 @@
 # Content-Type: application/json
 
 # {
-#   "email":"hariom@gmail.com",
-#   "password":"Hariom@123"
+#   "email":"hariom2@gmail.com",
+#   "password":"Hariom2@123"
 # }
 
 
@@ -78,3 +78,18 @@
 # GET http://localhost:4000/users/profile HTTP/1.1
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzk4YjEwMjY0ZjIxMjIzNjI1NGNhYTUiLCJpYXQiOjE3MzgwNjAyMTEsImV4cCI6MTczODE0NjYxMX0.UaVj56b6fYl5CYEKNhcZcDLU0GNlDju_4ehd_uUQRC8
 # Content-Type: application/json
+
+
+
+# GET http://localhost:4000/maps/get-coordinates?address=rahul nagar raisen madhya pradesh
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2EzNzlkMWJmZGZiOGZiYzBkNjAyNGEiLCJpYXQiOjE3Mzg3NjczMDgsImV4cCI6MTczODg1MzcwOH0.1FRpQgT17d7BMl-iHX_Hm3cke_cSTe5c0_qTEvf2-t4
+
+
+# GET http://localhost:4000/maps/get-distance-time?origin=shreyians coding school bhopal&destination=kolkata
+# Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2EzNzlkMWJmZGZiOGZiYzBkNjAyNGEiLCJpYXQiOjE3Mzg3NjczMDgsImV4cCI6MTczODg1MzcwOH0.1FRpQgT17d7BMl-iHX_Hm3cke_cSTe5c0_qTEvf2-t4
+
+
+
+
+GET http://localhost:4000/maps/get-suggestions?input=patna
+Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2EzNzlkMWJmZGZiOGZiYzBkNjAyNGEiLCJpYXQiOjE3Mzg3NjczMDgsImV4cCI6MTczODg1MzcwOH0.1FRpQgT17d7BMl-iHX_Hm3cke_cSTe5c0_qTEvf2-t4

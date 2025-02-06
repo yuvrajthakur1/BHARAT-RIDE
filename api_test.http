@@ -91,5 +91,21 @@
 
 
 
-GET http://localhost:4000/maps/get-suggestions?input=patna
-Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2EzNzlkMWJmZGZiOGZiYzBkNjAyNGEiLCJpYXQiOjE3Mzg3NjczMDgsImV4cCI6MTczODg1MzcwOH0.1FRpQgT17d7BMl-iHX_Hm3cke_cSTe5c0_qTEvf2-t4
+# GET http://localhost:4000/maps/get-suggestions?input=patna
+# Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2EzNzlkMWJmZGZiOGZiYzBkNjAyNGEiLCJpYXQiOjE3Mzg3NjczMDgsImV4cCI6MTczODg1MzcwOH0.1FRpQgT17d7BMl-iHX_Hm3cke_cSTe5c0_qTEvf2-t4
+
+
+
+
+//Ride Wali ROutes Test Ho rhe hei yaha se
+
+
+POST  http://localhost:4000/rides/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2EzNzlkMWJmZGZiOGZiYzBkNjAyNGEiLCJpYXQiOjE3Mzg4MjE0MzksImV4cCI6MTczODkwNzgzOX0._m61Au6DCW2RKc7j5WwmBBCwfsMr2p25Fx7CQG9NTxQ
+Content-Type: application/json
+
+{
+   "pickup":"shreyians coding school",
+   "destination":"Raisen Mp",
+   "vehicleType":"car"
+}

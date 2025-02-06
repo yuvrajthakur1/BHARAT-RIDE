@@ -6,7 +6,8 @@ const app = express();
 const connectToDb = require('./db/db');
 const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
-const mapsRoutes = require('./routes/map.routes')
+const mapsRoutes = require('./routes/map.routes');
+const rideRoutes = require('./routes/ride.routes');
 //it is a middleware
 const cookieParser = require('cookie-parser');
 
@@ -38,5 +39,9 @@ app.use('/captain',captainRoutes)
 // Using Google Api Route
 
 app.use('/maps',mapsRoutes);
+
+//rid eko use karre hei
+
+app.use('/rides',rideRoutes);
 
 module.exports = app;

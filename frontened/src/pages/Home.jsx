@@ -27,7 +27,7 @@ const Home = () => {
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
   const [fare, setFare] = useState({});
-
+  const [vehicleType, setVehicleType] = useState(null);
   const fetchSuggestions = useCallback(async (input) => {
     if (!input) {
       setSuggestions([]);
@@ -63,6 +63,10 @@ const Home = () => {
     e.preventDefault();
   };
 
+
+
+
+  // USeeffect ka area 👀👀👀
   useEffect(() => {
     if (panelOpen) {
       gsap.to(panelRef.current, {
@@ -140,6 +144,9 @@ const Home = () => {
     }
   }, [waitingForDriver]);
 
+
+
+
   // Function For Find Ride Button
 
   async function findTrip() {
@@ -154,8 +161,28 @@ const Home = () => {
         },
       }
     );
-
     console.log(response.data);
+     setFare(response.data);
+  }
+
+
+  // Function For Creating Ride On Selected Vehichle type by uSer
+
+
+  async function createRide(){
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+      pickup,
+      destination,
+      vehicleType
+  }, {
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+  })
+
+   console.log(response.data);
+
   }
 
   return (
@@ -203,16 +230,19 @@ const Home = () => {
 
           <button
             className="w-full mt-2  bg-black font-semibold rounded-lg px-12 py-1 text-white"
-            onClick={findTrip}
+            onClick={()=>findTrip()}
           >
-            Find A Ride
+            Find A Ride 
           </button>
         </div>
+
+
+
         <div
           ref={panelRef}
           className={`h-0 bg-white  ${
             panelOpen ? "block" : "hidden"
-          } location-search-panel`}
+          } location-search-panel `}
         >
           <LocationSearchPanel
             setPanelOpen={setPanelOpen}
@@ -221,6 +251,7 @@ const Home = () => {
             setPickUp={setPickup}
             setDestination={setDestination}
             activeInput={activeInput}
+            
           />
         </div>
       </div>
@@ -231,6 +262,8 @@ const Home = () => {
         <VehiclePanel
           setVehiclePanelOpen={setVehiclePanelOpen}
           setConfirmRidePanel={setConfirmRidePanel}
+          setVehicle ={setVehicleType}
+          fare={fare}
         />
       </div>
       <div
@@ -240,6 +273,11 @@ const Home = () => {
         <ConfirmedRide
           setConfirmRidePanel={setConfirmRidePanel}
           setVehicleFound={setVehicleFound}
+          createRide={createRide}
+          pickup={pickup}
+          destination={destination}
+          fare={fare}
+          vehicleType={vehicleType}
         />
       </div>
       <div
@@ -249,6 +287,13 @@ const Home = () => {
         <LookingForDriver
           setVehicleFound={setVehicleFound}
           setWaitingForDriver={setWaitingForDriver}
+          setConfirmRidePanel={setConfirmRidePanel}
+          // setVehicleFound={setVehicleFound}
+          createRide={createRide}
+          pickup={pickup}
+          destination={destination}
+          fare={fare}
+          vehicleType={vehicleType}
         />
       </div>
       <div

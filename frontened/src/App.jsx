@@ -13,7 +13,7 @@ import CaptainProtectWrapper from './pages/CaptainProtectWrapper';
 import CaptainLogout from './pages/CaptainLogout';
 import Riding from './pages/Riding';
 import CaptainRiding from './pages/CaptainRiding';
-import Suggetion from './pages/Suggetion';
+
 
 
 //Using  React Router For Routing in React
@@ -30,7 +30,7 @@ const App = ()=>{
       <Route path='/captain-signup' element={<CaptainSignUp/>} />
       <Route path='/riding' element={<Riding/>}/>
       <Route path='/captain-riding' element={<CaptainRiding/>}/>
-      <Route path='/get-suggestions' element={<Suggetion/>} />
+      
 
       <Route  path='/home' element={
          <UserProtectWrapper>

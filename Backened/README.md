@@ -1,207 +1,481 @@
-# Captain Routes Documentation
+# Backend API Documentation
 
-This document provides an overview of the routes and important information for the Captain model in the backend of the Uber Clone project. This will help frontend developers understand how to interact with the Captain-related endpoints.
+## `/users/register` Endpoint
 
-## Table of Contents
-- [Routes](#routes)
-  - [Register Captain](#register-captain)
-  - [Login Captain](#login-captain)
-  - [Get Captain Profile](#get-captain-profile)
-  - [Logout Captain](#logout-captain)
-- [Models](#models)
-  - [Captain Model](#captain-model)
-- [Controllers](#controllers)
-  - [Captain Controller](#captain-controller)
-- [Middlewares](#middlewares)
-  - [Auth Middleware](#auth-middleware)
-- [Services](#services)
-  - [Captain Service](#captain-service)
+### Description
 
-## Routes
+Registers a new user by creating a user account with the provided information.
 
-### Register Captain
-- **Endpoint:** `/register`
-- **Method:** `POST`
-- **Description:** Registers a new captain.
-- **Validation:**
-  - `email`: Must be a valid email.
-  - `fullname.firstname`: Minimum length of 3 characters.
-  - `password`: Minimum length of 6 characters.
-  - `vehicle.color`: Minimum length of 3 characters.
-  - `vehicle.plate`: Minimum length of 3 characters.
-  - `vehicle.capacity`: Minimum length of 1 character.
-  - `vehicle.vehicleType`: Must be one of `['car', 'motorcycle', 'auto']`.
-- **Controller Method:** `captainController.registerCaptain`
+### HTTP Method
 
-### Login Captain
-- **Endpoint:** `/login`
-- **Method:** `POST`
-- **Description:** Logs in an existing captain.
-- **Validation:**
-  - `email`: Must be a valid email.
-  - `password`: Minimum length of 6 characters.
-- **Controller Method:** `captainController.loginCaptain`
+`POST`
 
-### Get Captain Profile
-- **Endpoint:** `/profile`
-- **Method:** `GET`
-- **Description:** Retrieves the profile of the logged-in captain.
-- **Middleware:** `authMiddleware.authCaptain`
-- **Controller Method:** `captainController.getCaptainProfile`
+### Request Body
 
-### Logout Captain
-- **Endpoint:** `/logout`
-- **Method:** `POST`
-- **Description:** Logs out the current captain.
-- **Middleware:** `authMiddleware.authCaptain`
-- **Controller Method:** `captainController.logoutCaptain`
+The request body should be in JSON format and include the following fields:
 
-## Models
+- `fullname` (object):
+  - `firstname` (string, required): User's first name (minimum 3 characters).
+  - `lastname` (string, optional): User's last name (minimum 3 characters).
+- `email` (string, required): User's email address (must be a valid email).
+- `password` (string, required): User's password (minimum 6 characters).
 
-### Captain Model
-- **Schema:**
-  - `fullname`
-    - `firstname`: String, required, minimum length of 3 characters.
-    - `lastname`: String, minimum length of 3 characters.
-  - `email`: String, required, unique, lowercase, minimum length of 5 characters.
-  - `password`: String, required, select false.
-  - `socketId`: String.
-  - `status`: String, enum `['active', 'inactive']`, default `inactive`.
-  - `vehicle`
-    - `color`: String, required, minimum length of 3 characters.
-    - `plate`: String, required, minimum length of 3 characters.
-    - `capacity`: Number, required, minimum value of 1.
-    - `vehicleType`: String, required, enum `['car', 'motorcycle', 'auto']`.
-  - `location`
-    - `lat`: Number.
-    - `lng`: Number.
-- **Methods:**
-  - `generateAuthToken`: Generates a JWT token.
-  - `comparePassword`: Compares the provided password with the hashed password.
-- **Statics:**
-  - `hashPassword`: Hashes the provided password.
+### Example Response
 
-## Controllers
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).   
+  - `email` (string): User's email address (must be a valid email).
+  - `password` (string): User's password (minimum 6 characters).
+- `token` (String): JWT Token
 
-### Captain Controller
-- **Methods:**
-  - `registerCaptain`: Handles the registration of a new captain.
-  - `loginCaptain`: Handles the login of an existing captain.
-  - `getCaptainProfile`: Retrieves the profile of the logged-in captain.
-  - `logoutCaptain`: Logs out the current captain.
+## `/users/login` Endpoint
 
-## Middlewares
+### Description
 
-### Auth Middleware
-- **Methods:**
-  - `authUser`: Authenticates a user.
-  - `authCaptain`: Authenticates a captain.
+Authenticates a user using their email and password, returning a JWT token upon successful login.
 
-## Services
+### HTTP Method
 
-### Captain Service
-- **Methods:**
-  - `createCaptain`: Creates a new captain in the database.
+`POST`
 
-This documentation should provide a clear understanding of the Captain-related routes and their functionalities for the frontend developers.
+### Endpoint
+
+`/users/login`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- `email` (string, required): User's email address (must be a valid email).
+- `password` (string, required): User's password (minimum 6 characters).
+
+### Example Response
+
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).   
+  - `email` (string): User's email address (must be a valid email).
+  - `password` (string): User's password (minimum 6 characters).
+- `token` (String): JWT Token
+
+## `/users/profile` Endpoint
+
+### Description
+
+Retrieves the profile information of the currently authenticated user.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header:
+`Authorization: Bearer <token>`
+
+### Example Response
+
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).   
+  - `email` (string): User's email address (must be a valid email).
 
 
 
+## `/users/logout` Endpoint
 
-## User Routes Documentation
+### Description
 
-This document provides an overview of the routes and important information for the User model in the backend of the Uber Clone project. This will help frontend developers understand how to interact with the User-related endpoints.
+Logout the current user and blacklist the token provided in cookie or headers
 
-## Table of Contents
-- [Routes](#routes)
-  - [Register User](#register-user)
-  - [Login User](#login-user)
-  - [Get User Profile](#get-user-profile)
-  - [Logout User](#logout-user)
-- [Models](#models)
-  - [User Model](#user-model)
-- [Controllers](#controllers)
-  - [User Controller](#user-controller)
-- [Middlewares](#middlewares)
-  - [Auth Middleware](#auth-middleware)
-- [Services](#services)
-  - [User Service](#user-service)
+### HTTP Method
 
-## Routes
+`GET`
 
-### Register User
-- **Endpoint:** `/register`
-- **Method:** `POST`
-- **Description:** Registers a new user.
-- **Validation:**
-  - `email`: Must be a valid email.
-  - `fullname.firstname`: Minimum length of 3 characters.
-  - `password`: Minimum length of 6 characters.
-- **Controller Method:** `userController.registerUser`
+### Authentication
 
-### Login User
-- **Endpoint:** `/login`
-- **Method:** `POST`
-- **Description:** Logs in an existing user.
-- **Validation:**
-  - `email`: Must be a valid email.
-  - `password`: Minimum length of 6 characters.
-- **Controller Method:** `userController.loginUser`
+Requires a valid JWT token in the Authorization header or cookie:
 
-### Get User Profile
-- **Endpoint:** `/profile`
-- **Method:** `GET`
-- **Description:** Retrieves the profile of the logged-in user.
-- **Middleware:** `authMiddleware.authUser`
-- **Controller Method:** `userController.getUserProfile`
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).   
+  - `email` (string): User's email address (must be a valid email).
+  - `password` (string): User's password (minimum 6 characters).
+- `token` (String): JWT Token## `/captains/register` Endpoint
 
-### Logout User
-- **Endpoint:** `/logout`
-- **Method:** `POST`
-- **Description:** Logs out the current user.
-- **Middleware:** `authMiddleware.authUser`
-- **Controller Method:** `userController.logoutUser`
+### Description
 
-## Models
+Registers a new captain by creating a captain account with the provided information.
 
-### User Model
-- **Schema:**
-  - `fullname`
-    - `firstname`: String, required, minimum length of 3 characters.
-    - `lastname`: String, minimum length of 3 characters.
-  - `email`: String, required, unique, lowercase, minimum length of 5 characters.
-  - `password`: String, required, select false.
-  - `status`: String, enum `['active', 'inactive']`, default `inactive`.
-  - `location`
-    - `lat`: Number.
-    - `lng`: Number.
-- **Methods:**
-  - `generateAuthToken`: Generates a JWT token.
-  - `comparePassword`: Compares the provided password with the hashed password.
-- **Statics:**
-  - `hashPassword`: Hashes the provided password.
+### HTTP Method
 
-## Controllers
+`POST`
 
-### User Controller
-- **Methods:**
-  - `registerUser`: Handles the registration of a new user.
-  - `loginUser`: Handles the login of an existing user.
-  - `getUserProfile`: Retrieves the profile of the logged-in user.
-  - `logoutUser`: Logs out the current user.
+### Request Body
 
-## Middlewares
+The request body should be in JSON format and include the following fields:
 
-### Auth Middleware
-- **Methods:**
-  - `authUser`: Authenticates a user.
-  - `authCaptain`: Authenticates a captain.
+- `fullname` (object):
+  - `firstname` (string, required): Captain's first name (minimum 3 characters)
+  - `lastname` (string, optional): Captain's last name
+- `email` (string, required): Captain's email address (must be a valid email)
+- `password` (string, required): Captain's password (minimum 6 characters)
+- `vehicle` (object):
+  - `color` (string, required): Vehicle color (minimum 3 characters)
+  - `plate` (string, required): Vehicle plate number (minimum 3 characters)
+  - `capacity` (number, required): Vehicle passenger capacity (minimum 1)
+  - `vehicleType` (string, required): Type of vehicle (must be 'car', 'motorcycle', or 'auto')
 
-## Services
+### Example Response
 
-### User Service
-- **Methods:**
-  - `createUser`: Creates a new user in the database.
 
-This documentation should provide a clear understanding of the User-related routes and their functionalities for the frontend developers.
+## `/captains/register` Endpoint
 
+### Description
+
+Registers a new captain by creating a captain account with the provided information.
+
+### HTTP Method
+
+`POST`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- `fullname` (object):
+  - `firstname` (string, required): Captain's first name (minimum 3 characters).
+  - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+- `email` (string, required): Captain's email address (must be a valid email).
+- `password` (string, required): Captain's password (minimum 6 characters).
+- `vehicle` (object):
+  - `color` (string, required): Vehicle color (minimum 3 characters).
+  - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+  - `capacity` (number, required): Vehicle passenger capacity (minimum 1).
+  - `vehicleType` (string, required): Type of vehicle (must be 'car', 'motorcycle', or 'auto').
+
+### Example Response
+
+- `captain` (object):
+  - `fullname` (object).
+    - `firstname` (string): Captain's first name (minimum 3 characters).
+    - `lastname` (string): Captain's last name (minimum 3 characters).   
+  - `email` (string): Captain's email address (must be a valid email).
+  - `password` (string): Captain's password (minimum 6 characters).
+  - `vehicle` (object):
+    - `color` (string): Vehicle color.
+    - `plate` (string): Vehicle plate number.
+    - `capacity` (number): Vehicle passenger capacity.
+    - `vehicleType` (string): Type of vehicle.
+- `token` (String): JWT Token
+
+## `/captains/login` Endpoint
+
+### Description
+
+Authenticates a captain using their email and password, returning a JWT token upon successful login.
+
+### HTTP Method
+
+`POST`
+
+### Endpoint
+
+`/captains/login`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- `email` (string, required): Captain's email address (must be a valid email).
+- `password` (string, required): Captain's password (minimum 6 characters).
+
+### Example Response
+
+- `captain` (object):
+  - `fullname` (object).
+    - `firstname` (string): Captain's first name (minimum 3 characters).
+    - `lastname` (string): Captain's last name (minimum 3 characters).   
+  - `email` (string): Captain's email address (must be a valid email).
+  - `password` (string): Captain's password (minimum 6 characters).
+  - `vehicle` (object):
+    - `color` (string): Vehicle color.
+    - `plate` (string): Vehicle plate number.
+    - `capacity` (number): Vehicle passenger capacity.
+    - `vehicleType` (string): Type of vehicle.
+- `token` (String): JWT Token
+
+## `/captains/profile` Endpoint
+
+### Description
+
+Retrieves the profile information of the currently authenticated captain.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header:
+`Authorization: Bearer <token>`
+
+### Example Response
+
+- `captain` (object):
+  - `fullname` (object).
+    - `firstname` (string): Captain's first name (minimum 3 characters).
+    - `lastname` (string): Captain's last name (minimum 3 characters).   
+  - `email` (string): Captain's email address (must be a valid email).
+  - `vehicle` (object):
+    - `color` (string): Vehicle color.
+    - `plate` (string): Vehicle plate number.
+    - `capacity` (number): Vehicle passenger capacity.
+    - `vehicleType` (string): Type of vehicle.
+
+## `/captains/logout` Endpoint
+
+### Description
+
+Logout the current captain and blacklist the token provided in cookie or headers.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header or cookie.
+
+### Example Response
+
+- `message` (string): Logout successfully.
+
+
+## `/maps/get-coordinates` Endpoint
+
+### Description
+
+Retrieves the coordinates (latitude and longitude) for a given address.
+
+### HTTP Method
+
+`GET`
+
+### Request Parameters
+
+- `address` (string, required): The address for which to retrieve coordinates.
+
+### Example Request
+
+GET `/maps/get-coordinates?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA`
+
+### Example Response
+
+```json
+{
+  "ltd": 37.4224764,
+  "lng": -122.0842499
+}
+```
+
+### Error Response
+
+- `400 Bad Request`: If the address parameter is missing or invalid.
+- `404 Not Found`: If the coordinates for the given address could not be found.
+
+```json
+{
+  "message": "Coordinates not found"
+}
+```
+
+## `/maps/get-distance-time` Endpoint
+
+### Description
+
+Retrieves the distance and estimated travel time between two locations.
+
+### HTTP Method
+
+`GET`
+
+### Request Parameters
+
+- `origin` (string, required): The starting address or location.
+- `destination` (string, required): The destination address or location.
+
+### Example Request
+
+```
+GET /maps/get-distance-time?origin=New+York,NY&destination=Los+Angeles,CA
+```
+
+### Example Response
+
+```json
+{
+  "distance": {
+    "text": "2,789 miles",
+    "value": 4486540
+  },
+  "duration": {
+    "text": "1 day 18 hours",
+    "value": 154800
+  }
+}
+```
+
+### Error Response
+
+- `400 Bad Request`: If the origin or destination parameter is missing or invalid.
+- `404 Not Found`: If the distance and time for the given locations could not be found.
+
+```json
+{
+  "message": "No routes found"
+}
+```
+
+## `/maps/get-suggestions` Endpoint
+
+### Description
+
+Retrieves autocomplete suggestions for a given input string.
+
+### HTTP Method
+
+`GET`
+
+### Request Parameters
+
+- `input` (string, required): The input string for which to retrieve suggestions.
+
+### Example Request
+
+```
+GET /maps/get-suggestions?input=1600+Amphitheatre
+```
+
+### Example Response
+
+```json
+[
+  "1600 Amphitheatre Parkway, Mountain View, CA, USA",
+  "1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA"
+]
+```
+
+### Error Response
+
+- `400 Bad Request`: If the input parameter is missing or invalid.
+- `500 Internal Server Error`: If there is an error retrieving suggestions.
+
+```json
+{
+  "message": "Unable to fetch suggestions"
+}
+```
+
+## `/rides/create` Endpoint
+
+### Description
+
+Creates a new ride with the provided information.
+
+### HTTP Method
+
+`POST`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header:
+`Authorization: Bearer <token>`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- `pickup` (string, required): The pickup address (minimum 3 characters).
+- `destination` (string, required): The destination address (minimum 3 characters).
+- `vehicleType` (string, required): The type of vehicle (must be 'auto', 'car', or 'moto').
+
+### Example Response
+
+- `ride` (object):
+  - `user` (string): User ID.
+  - `pickup` (string): Pickup address.
+  - `destination` (string): Destination address.
+  - `fare` (number): Fare amount.
+  - `status` (string): Ride status.
+  - `duration` (number): Duration in seconds.
+  - `distance` (number): Distance in meters.
+  - `otp` (string): OTP for the ride.
+
+### Error Response
+
+- `400 Bad Request`: If any required field is missing or invalid.
+- `500 Internal Server Error`: If there is an error creating the ride.
+
+```json
+{
+  "message": "Error message"
+}
+```
+
+
+## `/rides/get-fare` Endpoint
+
+### Description
+
+Retrieves the fare estimate for a ride between the provided pickup and destination addresses.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header:
+`Authorization:
+
+ Bear
+
+er <token>`
+
+### Request Parameters
+
+- `pickup` (string, required): The pickup address (minimum 3 characters).
+- `destination` (string, required): The destination address (minimum 3 characters).
+
+### Example Request
+
+```
+GET /rides/get-fare?pickup=1600+Amphitheatre+Parkway,+Mountain+View,+CA&destination=1+Infinite+Loop,+Cupertino,+CA
+```
+
+### Example Response
+
+```json
+{
+  "auto": 50.0,
+  "car": 75.0,
+  "moto": 40.0
+}
+```
+
+### Error Response
+
+- `400 Bad Request`: If any required parameter is missing or invalid.
+- `500 Internal Server Error`: If there is an error calculating the fare.
+
+```json
+{
+  "message": "Error message"
+}
+```

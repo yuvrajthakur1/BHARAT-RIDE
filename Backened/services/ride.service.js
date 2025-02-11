@@ -26,8 +26,8 @@ async function getFare(pickup, destination) {
 
   const perKmRate = {
     auto: 10,
-    car: 15,
-    moto: 8,
+    car: 12,
+    moto: 4,
   };
 
   const perMinuteRate = {
@@ -57,6 +57,8 @@ async function getFare(pickup, destination) {
   return fare;
 }
 
+
+module.exports.getFare = getFare;
 
 
 

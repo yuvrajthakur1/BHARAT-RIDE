@@ -4,18 +4,13 @@ const carimgurl =
   "https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1682350114/assets/c2/296eac-574a-4a81-a787-8a0387970755/original/UberBlackXL.png";
 
 // eslint-disable-next-line react/prop-types
-const WaitForDriver = ({setWaitingFordriver}) => {
+const WaitForDriver = ({setWaitingForDriver}) => {
   return (
     <div className="relative">
-      <h3 className="absolute  font-bold  w-full -mt-10 text-center p-2"
-      onClick={()=>setWaitingFordriver(false)}
-      >
 
-        
-        <i
-          className="ri-arrow-down-wide-line text-2xl"
-          
-        />
+      <h3 className="absolute  font-bold  w-full -mt-10 text-center p-2"
+      onClick={()=>setWaitingForDriver(false)}>
+        <i className="ri-arrow-down-wide-line text-2xl"/>
       </h3>
 
       <div className="flex justify-between  items-center">

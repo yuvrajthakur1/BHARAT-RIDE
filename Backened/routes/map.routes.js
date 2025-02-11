@@ -29,8 +29,8 @@ router.get('/get-distance-time',
 // route to get suggestion on the basis of search 
 
 router.get('/get-suggestions',
-  query('input').isString().isLength({min:3}),
   authMiddleware.authUser,
+  query('input').isString().isLength({min:3}),
   mapController.getAutoCompleteSuggestions
 )
 
